@@ -33,7 +33,7 @@ class RegisterController extends Controller
     protected function redirectTo(){
         $url="/";
         if(Auth::user()->role == 1){
-            $url="/admin-dashborad";
+            $url="/admin-dashboard";
         }elseif (Auth::user()->role == 0){
             $url="/user-dashboard";
         }

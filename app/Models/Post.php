@@ -15,6 +15,7 @@ class Post extends Model
 
     ];
 
+
     public function image()
     {
         return $this->hasMany(Image::class, 'post_id');

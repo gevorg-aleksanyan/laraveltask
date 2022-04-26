@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -28,9 +29,10 @@ class LoginController extends Controller
      * @var string
      */
     protected function redirectTo(){
+
         $url="/";
         if(Auth::user()->role == 1){
-            $url="/admin-dashborad";
+            $url="/admin-dashboard";
         }elseif (Auth::user()->role == 0){
             $url="/user-dashboard";
         }

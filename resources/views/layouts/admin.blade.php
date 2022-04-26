@@ -21,7 +21,7 @@
 <body>
 
 <div class="header">
-    <a href="{{route('admin_dashboard')}}" class="logo">Admin</a>
+    <a href="{{route('admin-dashboard')}}" class="logo">Admin</a>
     <a href="{{route('create_post_page')}}" >Add Post</a>
     <div class="header-right" style="display: flex">
         <div style="margin-top: 15px">

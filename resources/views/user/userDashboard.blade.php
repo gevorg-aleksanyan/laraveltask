@@ -30,7 +30,7 @@
            <div style="width: 95%;height: auto;display: flex;justify-content: space-around;flex-wrap: wrap">
 
                @foreach($posts as $post)
-                   <a href="" style="width: 20%;height: 250px;background: #bcbec0">
+                   <a href="{{route('post_singl',['id' => $post->id])}}" style="width: 20%;height: 250px;background: #bcbec0">
                        <div style="width: 20%;height: 250px;background: #bcbec0;text-align: center">
 
                            <h1>{{$post->title}}</h1>

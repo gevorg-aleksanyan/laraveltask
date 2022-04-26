@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Psy\Util\Str;
+use Symfony\Component\Console\Input\Input;
 
 class AdminController extends Controller
 {
+
+
     public function index(){
         $posts=Post::all();
 
@@ -35,21 +40,31 @@ class AdminController extends Controller
          $post->text = $request->post_text_add;
          $post->save();
 
-         $images = $request->image;
-         for($i=0; $i<count($images);$i++){
-             $imgcount = Image::where('post_id',$post->id)->get();
-             if(count($imgcount) <= 20){
-                 $img = new Image();
-                 $imageName = time() . '.' . $images[$i]->extension();
-                 $images[$i]->move(public_path('assets/uploads'), $imageName);
-                 $img->post_id = $post->id;
-                 $img->image = $imageName;
-                 $img->save();
-             }
-         }
+        $images =array();
+
+        if($files =$request->file('image')) {
+
+            for($i=0;$i<count($files);$i++) {
+                $name = $files[$i]->getClientOriginalName();
+                $destinationPath = public_path('admin/img');
+                if ($files[$i]->move($destinationPath, $name)) {
+                    $images[] = $name;
+                }
+
+            }
+        }
+
+        foreach ($images as $p){
+
+            $img = new Image();
+            $img->post_id = $post->id;
+            $img->image = $p;
+            $img->save();
+        }
 
 
-        return redirect()->route('admin_dashboard');
+
+        return redirect()->route('admin-dashboard');
     }
 
     public function see_post($id){
@@ -76,7 +91,7 @@ class AdminController extends Controller
         $post->description = $request->description_edit;
         $post->text = $request->post_text_edit;
         $post->update();
-        return redirect()->route('admin_dashboard');
+        return redirect()->route('admin-dashboard');
     }
     public function delete_post($id){
         $post = Post::find($id);
@@ -84,5 +99,32 @@ class AdminController extends Controller
         return redirect()->back();
 
 
+    }
+    public function delete_img($id){
+        $post = Image::find($id);;
+        $image_path = 'admin/img/'.$post->image;
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+
+        $post->delete();
+        return redirect()->back();
+
+
+    }
+    public function img_edit(Request $request){
+
+        if($request->img != ''){
+           $image=Image::find($request->id);
+
+            $name=  $request->img->getClientOriginalName();
+            $destinationPath = public_path('admin/img');
+            if ($request->img->move($destinationPath,$name )) {
+                $image->image = $name;
+                $image->update();
+
+            }
+        }
+        return redirect()->back();
     }
 }

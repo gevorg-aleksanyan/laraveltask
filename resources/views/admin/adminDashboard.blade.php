@@ -18,7 +18,7 @@
            <tr>
                <td>{{$post->title}}</td>
                <td>{{$post->description}}</td>
-               <td>{{$post->text}}</td>
+               <td>{{ Str::limit($post->text, 10) }}</td>
                <td><a href="{{route('see',['id' => $post->id])}}">see more</a></td>
                <td><a href="{{route('edit',['id' => $post->id])}}">edit</a></td>
                <td><a href="{{route('delete',['id' => $post->id])}}">delete</a></td>
