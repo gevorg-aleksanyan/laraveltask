@@ -44,25 +44,27 @@ class AdminController extends Controller
 
         if($files =$request->file('image')) {
 
-            for($i=0;$i<count($files);$i++) {
-                $name = $files[$i]->getClientOriginalName();
-                $destinationPath = public_path('admin/img');
-                if ($files[$i]->move($destinationPath, $name)) {
-                    $images[] = $name;
+               for($i=0;$i<count($files);$i++) {
+                   $name = $files[$i]->getClientOriginalName();
+                   $destinationPath = public_path('admin/img');
+                   if ($files[$i]->move($destinationPath, $name)) {
+                       $images[] = $name;
+                   }
+               }
+            $imgcount = Image::where('post_id',$post->id)->get();;
+            if(count($imgcount)<20) {
+                if ($images != '') {
+                    foreach ($images as $p) {
+
+                        $img = new Image();
+                        $img->post_id = $post->id;
+                        $img->image = $p;
+                        $img->save();
+                    }
                 }
-
             }
+
         }
-
-        foreach ($images as $p){
-
-            $img = new Image();
-            $img->post_id = $post->id;
-            $img->image = $p;
-            $img->save();
-        }
-
-
 
         return redirect()->route('admin-dashboard');
     }
@@ -96,6 +98,15 @@ class AdminController extends Controller
     public function delete_post($id){
         $post = Post::find($id);
         $post->delete();
+
+        $image = Image::where('post_id',$id)->get();
+        foreach ($image as $img){
+            $image_path = 'admin/img/'.$img->image;
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+                $img->delete();
+            }
+        }
         return redirect()->back();
 
 
