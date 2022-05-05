@@ -3,6 +3,7 @@
 @section('content')
 
 
+
     <h1 class="text-center">New Post</h1>
 
     <div style="display: flex;justify-content: center">
@@ -15,7 +16,7 @@
                 <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                      </span>
-                @enderror
+                    @enderror
                 <input type='text' name='description_add' placeholder='Description' class='form-control @error('description_add') is-invalid @enderror' required><br>
                 @error('description_add')
                 <span class="invalid-feedback" role="alert">

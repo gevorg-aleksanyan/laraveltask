@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\Post;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -45,11 +46,9 @@ class AdminController extends Controller
         if($files =$request->file('image')) {
 
                for($i=0;$i<count($files);$i++) {
-                   $name = $files[$i]->getClientOriginalName();
-                   $destinationPath = public_path('admin/img');
-                   if ($files[$i]->move($destinationPath, $name)) {
-                       $images[] = $name;
-                   }
+                   $img_serv =new imageService();
+                   $img_name=$img_serv->moveImage($files[$i]);
+                   $images[] = $img_name;
                }
             $imgcount = Image::where('post_id',$post->id)->get();;
             if(count($imgcount)<20) {
@@ -127,14 +126,10 @@ class AdminController extends Controller
 
         if($request->img != ''){
            $image=Image::find($request->id);
-
-            $name=  $request->img->getClientOriginalName();
-            $destinationPath = public_path('admin/img');
-            if ($request->img->move($destinationPath,$name )) {
-                $image->image = $name;
+            $img_serv =new imageService();
+            $img_name=$img_serv->moveImage($request->img);
+                $image->image = $img_name;
                 $image->update();
-
-            }
         }
         return redirect()->back();
     }
