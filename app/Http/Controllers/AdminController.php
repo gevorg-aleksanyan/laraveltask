@@ -20,12 +20,12 @@ class AdminController extends Controller
     public function index(){
         $posts=Post::all();
 
-        return view('admin/adminDashboard',compact('posts'));
+        return view('admin.adminDashboard',compact('posts'));
     }
 
     public function createPostPage(){
 
-        return view('admin/addPost');
+        return view('admin.addPost');
     }
 
     public function createPost(StoreValidationRequest $request){
