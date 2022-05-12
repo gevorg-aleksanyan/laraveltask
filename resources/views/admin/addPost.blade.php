@@ -11,7 +11,7 @@
             <form style='margin-top:50px' method='post' action="{{route('create_post')}}" enctype="multipart/form-data">
 
                 @csrf
-                <input type='text' name='title_add' placeholder='Post title' class='form-control @error('title_add') is-invalid @enderror' required><br>
+                <input type='text' name='title_add' placeholder='Post title' class='form-control @error('title_add') is-invalid @enderror' ><br>
                 @error('title_add')
                 <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

@@ -19,7 +19,7 @@
                        @foreach($image as $img)
                        <div style="width: 150px;height: 150px;margin:10px 10px">
 
-                           <img src="{{asset('admin/img/'.$img->image)}}" style="width: 100%;height: 100%">
+                           <img src="{{asset('storage/admin/posts/'.$img->image)}}" style="width: 100%;height: 100%">
 
                            <div>
                                <input type="hidden" value="{{$img->id}}" class="hid_id">

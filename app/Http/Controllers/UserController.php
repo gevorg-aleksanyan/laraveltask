@@ -7,22 +7,20 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-//        public function __construct()
-//    {
-//        $this->middleware('auth');
-//        $this->middleware('user');
-//    }
+        public function __construct()
+    {
+        $this->middleware('auth');
 
-
+    }
 
    public function index(){
        $posts = [];
-       return view('user/userDashboard',['posts'=>$posts]);;
+       return view('user.userDashboard',['posts'=>$posts]);;
    }
 
-   public function all_post(){
+   public function allPost(){
        $posts = Post::all();
-       return view('user/allPosts',['posts'=>$posts]);
+       return view('user.allPosts',['posts'=>$posts]);
    }
 
    public function search(Request $request){
@@ -43,18 +41,12 @@ class UserController extends Controller
            }
        }
        $new_post = array_merge($title,$desc,$text);
-
-
-
-
-
-       return view('user/userDashboard',['posts'=>$new_post]);
+       return view('user.userDashboard',['posts'=>$new_post]);
 
    }
-
-    public function post_singl($id){
+    public function postSingl($id){
     $post=Post::find($id);
     $image =  $post->image;
-    return view('user/postSinglpage',compact('post','image'));
+    return view('user.postSinglpage',compact('post','image'));
     }
 }

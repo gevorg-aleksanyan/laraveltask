@@ -19,9 +19,9 @@
 </head>
 <body>
 <div class="header">
-    <a href="{{route('user-dashboard')}}" class="logo">User</a>
+    <a href="{{route('user_dashboard')}}" class="logo">User</a>
 
-    <a href="{{route('user-all_post')}}" >All Post</a>
+    <a href="{{route('user_all_post')}}" >All Post</a>
     <div class="header-right" style="display: flex">
        <div style="margin-top: 15px">
            <h3  class="log_btn">{{Auth::user()->firstname}}</h3>
